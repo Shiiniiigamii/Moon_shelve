@@ -2,4 +2,4 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 def index(request):
-    return render(request, 'shop/main_template.html')
+    return render(request, 'shop/books.html')

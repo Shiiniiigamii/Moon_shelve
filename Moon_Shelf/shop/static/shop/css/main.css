@@ -1,0 +1,108 @@
+/* Общие стили */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1a1a2e; /* Темно-фиолетовый фон (ночное небо) */
+    color: #fff; /* Белый текст */
+}
+
+a {
+    color: #a29bfe; /* Светло-фиолетовый цвет ссылок */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Шапка сайта (Header) */
+header {
+    background-color: #2f2f4f; /* Более светлый фиолетовый для шапки */
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Тень */
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2em;
+    letter-spacing: 2px;
+}
+
+/* Навигация (Navigation) */
+nav {
+    background-color: #3f37c9; /* Яркий фиолетовый для навигации */
+    padding: 10px;
+    display: flex;
+    justify-content: space-around; /* Равномерное распределение пунктов меню */
+}
+
+nav a {
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: #5a54c9; /* Более темный фиолетовый при наведении */
+    text-decoration: none;
+}
+
+/* Основной контент (Main Content) */
+main {
+    padding: 20px;
+    min-height: 600px; /* Минимальная высота для контента */
+}
+
+/* Подвал сайта (Footer) */
+footer {
+    background-color: #2f2f4f; /* Как и шапка */
+    padding: 20px;
+    text-align: center;
+    font-size: 0.8em;
+    color: #ccc; /* Светло-серый текст */
+    border-top: 1px solid #444;
+}
+
+/* Стили для блоков с книгами (пример) */
+.book-item {
+    background-color: #24243e; /* Темный фиолетовый для элементов */
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.book-item h2 {
+    margin-top: 0;
+    font-size: 1.2em;
+    color: #d4d0ff; /* Очень светлый фиолетовый для заголовков книг */
+}
+
+.book-item p {
+    color: #bbb;
+    line-height: 1.4;
+}
+
+/* Поиск */
+.search-bar {
+    padding: 10px;
+    background-color: #3f37c9;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+.search-bar input[type="text"] {
+    padding: 8px;
+    border: none;
+    border-radius: 3px;
+    width: 70%;
+}
+.search-bar button[type="submit"] {
+    padding: 8px 12px;
+    background-color: #a29bfe;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}

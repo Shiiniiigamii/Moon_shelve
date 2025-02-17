@@ -67,14 +67,21 @@ WSGI_APPLICATION = 'Moon_Shelf.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.environ.get('DATABASE_ENGINE', 'django.db.backends.sqlite3'),  
-        'NAME': os.environ.get('DATABASE_NAME', BASE_DIR / 'db.sqlite3'),      
-        'USER': os.environ.get('DATABASE_USER'),
-        'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
-        'HOST': os.environ.get('DATABASE_HOST'),
-        'PORT': os.environ.get('DATABASE_PORT'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+#DATABASES = {
+#    'default': {
+#        'ENGINE': os.environ.get('DATABASE_ENGINE', 'django.db.backends.sqlite3'),  
+#        'NAME': os.environ.get('DATABASE_NAME', BASE_DIR / 'db.sqlite3'),      
+#        'USER': os.environ.get('DATABASE_USER'),
+#        'HOST': os.environ.get('DATABASE_HOST'),
+#        'PORT': os.environ.get('DATABASE_PORT'),
+#   }
+#}
+
 
 
 # Password validation
@@ -117,3 +124,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
