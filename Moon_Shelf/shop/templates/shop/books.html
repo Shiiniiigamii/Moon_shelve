@@ -1,13 +1,34 @@
 {% extends 'shop/main_template.html' %}
 
 {% block content %}
-    <h2>Рекомендуемые книги</h2>
-    <div class="book-item">
-        <h2>Название книги 1</h2>
-        <p>Описание книги 1...</p>
-    </div>
-    <div class="book-item">
-        <h2>Название книги 2</h2>
-        <p>Описание книги 2...</p>
+    {% load static %}
+    <script src="{% static 'shop/js/scroll.js' %}"></script>
+    <h2 class="theme">Рекомендуемые книги</h2>
+    <div class="book-slider">
+        <button class="slider-button slider-button--left" onclick="scrollBooks(-1)">&#8249;</button>  <!-- Кнопка "влево" -->
+        <div class="book-container">
+            <div class="book-item">
+                <h2>Название книги 1</h2>
+                <p>Описание книги 1...</p>
+            </div>
+            <div class="book-item">
+                <h2>Название книги 2</h2>
+                <p>Описание книги 2...</p>
+            </div>
+            <!-- Добавьте больше элементов .book-item здесь -->
+            <div class="book-item">
+                <h2>Название книги 3</h2>
+                <p>Описание книги 3...</p>
+            </div>
+            <div class="book-item">
+                <h2>Название книги 4</h2>
+                <p>Описание книги 4...</p>
+            </div>
+            <div class="book-item">
+                <h2>Название книги 5</h2>
+                <p>Описание книги 5...</p>
+            </div>
+        </div>
+        <button class="slider-button slider-button--right" onclick="scrollBooks(1)">&#8250;</button> <!-- Кнопка "вправо" -->
     </div>
 {% endblock %}

@@ -3,12 +3,12 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #1a1a2e; /* Темно-фиолетовый фон (ночное небо) */
+    background-color: #EFE2FA; /* Темно-фиолетовый фон (ночное небо) */
     color: #fff; /* Белый текст */
 }
 
 a {
-    color: #a29bfe; /* Светло-фиолетовый цвет ссылок */
+    color: #8078f0; /* Светло-фиолетовый цвет ссылок */
     text-decoration: none;
 }
 
@@ -18,24 +18,82 @@ a:hover {
 
 /* Шапка сайта (Header) */
 header {
-    background-color: #2f2f4f; /* Более светлый фиолетовый для шапки */
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Тень */
+    background-color:#6144f1b0;
+    box-shadow: 0 2px 5px rgb(255, 255, 255); /* Тень */
+    display: flex;
+    flex-direction: column; /* Вертикальный макет для header */
+    align-items: stretch; /* Растягиваем элементы по ширине */
+}
+
+.header-top {
+    display: flex; /* Flex для названия и иконок */
+    justify-content: space-between; /* Название слева, иконки справа */
+    align-items: center; /* Выравнивание по вертикали */
+    margin-bottom: 10px; /* Отступ между верхним рядом и строкой поиска */
 }
 
 header h1 {
-    margin: 0;
-    font-size: 2em;
-    letter-spacing: 2px;
+    margin: 10;
+    font-size: 1em;
+    letter-spacing: 0.5px;
+    display: flex;
+    flex-direction: column;
+    background-color: #d7abffbb;
+    padding: 15px 10px;
+    border-radius: 5px;
+}
+
+/* Поиск */
+.search-bar {
+    margin-bottom: 25px;
+    display: flex; /* Flex для строки поиска */
+    justify-content: center; /* Выравниваем форму по центру */
+}
+.search-bar form {
+    width: 100%; /* Чтобы форма занимала всю ширину search-bar */
+    display: flex;
+    justify-content: center;
+}
+.search-bar input[type="text"] {
+    padding: 8px;
+    border: none;
+    border-radius: 3px;
+    width: 70%; /* Изменяем ширину поля ввода */
+    max-width: 500px; /*  максимальную ширину для поля ввода  */
+    height: max-content;
+}
+.search-bar button[type="submit"] {
+    padding: 8px 12px;
+    background-color: #d7abffbb;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-left: 5px; /* Расстояние между полем ввода и кнопкой */
+}
+
+/* Общий стиль для контейнера иконки и текста */
+.icon-container {
+    display: flex;       /* Используем flexbox для выравнивания */
+    align-items: right; /* Выравниваем элементы по вертикали */
+    margin-bottom: 10px;   /* Добавляем небольшой отступ снизу */
+
+}
+
+.icon-container span {
+    color: #ffffffbb; /* Светло-фиолетовый цвет */
+    font-size: 1.4em; /* Увеличенный размер */
+    margin-left: 10px; /* Добавил больший отступ между иконками */
 }
 
 /* Навигация (Navigation) */
 nav {
-    background-color: #3f37c9; /* Яркий фиолетовый для навигации */
-    padding: 10px;
+    background-color: #d7abffbb; /* Яркий фиолетовый для навигации */
+    padding: 5px;
     display: flex;
     justify-content: space-around; /* Равномерное распределение пунктов меню */
+    border-radius: 25%;
+    
 }
 
 nav a {
@@ -45,7 +103,7 @@ nav a {
 }
 
 nav a:hover {
-    background-color: #5a54c9; /* Более темный фиолетовый при наведении */
+    background-color: #e989e983; /* Более темный фиолетовый при наведении */
     text-decoration: none;
 }
 
@@ -67,42 +125,66 @@ footer {
 
 /* Стили для блоков с книгами (пример) */
 .book-item {
-    background-color: #24243e; /* Темный фиолетовый для элементов */
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 15px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    flex: 0 0 auto;
+    width: 200px;
+    margin-right: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
 }
 
+.book-container {
+    display: flex;
+    overflow-x: hidden; /*  Убираем полосу прокрутки */
+    padding: 10px;
+    scroll-behavior: smooth; /*  плавная прокрутка */
+}
 .book-item h2 {
-    margin-top: 0;
     font-size: 1.2em;
+    margin-bottom: 5px;
     color: #d4d0ff; /* Очень светлый фиолетовый для заголовков книг */
+}
+
+.theme{
+    color: #6144f1b0;
+    text-align: left;
+    margin-bottom: 20px;
 }
 
 .book-item p {
     color: #bbb;
-    line-height: 1.4;
+    font-size: 0.9em;
 }
 
-/* Поиск */
-.search-bar {
-    padding: 10px;
-    background-color: #3f37c9;
-    border-radius: 5px;
-    margin-bottom: 20px;
+.book-slider {
+    position: relative; /*  позиционирование для кнопок */
+    margin-bottom: 20px;   /*  Отступ снизу всего слайдера */
 }
-.search-bar input[type="text"] {
-    padding: 8px;
-    border: none;
-    border-radius: 3px;
-    width: 70%;
+.book-item h2 {
+    font-size: 1.2em;
+    margin-bottom: 5px;
 }
-.search-bar button[type="submit"] {
-    padding: 8px 12px;
-    background-color: #a29bfe;
-    color: white;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
+/*  Кнопки слайдера */
+.slider-button {
+    position: absolute;       
+    top: 50%;               
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5); 
+    color: white;           
+    border: none;            
+    padding: 10px 15px;      
+    border-radius: 5px;      
+    cursor: pointer;         
+    z-index: 10;             
+    font-size: 1.2em;        
+}
+.slider-button--left {
+    left: 10px;              /*  позиция слева */
+}
+.slider-button--right {
+    right: 10px;             /*  позиция справа */
+}
+.slider-button:hover {
+    background-color: rgba(0, 0, 0, 0.8); /*  затемняем фон */
 }
