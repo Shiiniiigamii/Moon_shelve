@@ -6,7 +6,6 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
-import uuid
 
 
 class Address(models.Model):
@@ -23,8 +22,6 @@ class Address(models.Model):
     class Meta:
         managed = False
         db_table = 'address'
-
-    
 
 
 class AuthGroup(models.Model):
@@ -104,14 +101,11 @@ class Authors(models.Model):
         managed = False
         db_table = 'authors'
 
-    def __str__(self):
-        return self.name
-
 
 class Basket(models.Model):
     basket_id = models.AutoField(primary_key=True)
-    user = models.ForeignKey('Users', models.CASCADE)
-    book = models.ForeignKey('Books', models.CASCADE)
+    user = models.ForeignKey('Users', models.DO_NOTHING)
+    book_id = models.UUIDField(unique=True)
     quantity = models.SmallIntegerField()
 
     class Meta:
@@ -126,9 +120,6 @@ class BindingType(models.Model):
     class Meta:
         managed = False
         db_table = 'binding_type'
-    
-    def __str__(self):
-        return self.name_binding_type
 
 
 class BookSeries(models.Model):
@@ -139,15 +130,12 @@ class BookSeries(models.Model):
         managed = False
         db_table = 'book_series'
 
-    def __str__(self):
-        return self.name_book_series
-
 
 class Books(models.Model):
-    book_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    book_id = models.UUIDField(primary_key=True)
     author = models.ForeignKey(Authors, models.DO_NOTHING)
     binding_type = models.ForeignKey(BindingType, models.DO_NOTHING)
-    series_id = models.ForeignKey('BookSeries', models.DO_NOTHING, db_column='series_id', blank=True, null=True)
+    series_id = models.AutoField()
     category = models.ForeignKey('Category', models.DO_NOTHING)
     publisher = models.ForeignKey('Publisher', models.DO_NOTHING)
     title = models.CharField(max_length=100)
@@ -161,17 +149,13 @@ class Books(models.Model):
     circulation = models.IntegerField()
     weight = models.SmallIntegerField()
     size = models.CharField(max_length=20)
-    isbn = models.CharField(max_length=20, unique=True)
+    isbn = models.CharField(max_length=20)
     pages = models.SmallIntegerField()
-    year_of_publication = models.IntegerField()
-    year_of_release = models.IntegerField(blank=True, null=True)
+    year_release = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'books'
-    
-    def __str__(self):
-        return self.title
 
 
 class Category(models.Model):
@@ -181,9 +165,6 @@ class Category(models.Model):
     class Meta:
         managed = False
         db_table = 'category'
-
-    def __str__(self):
-        return self.name_category
 
 
 class DjangoAdminLog(models.Model):
@@ -232,7 +213,6 @@ class DjangoSession(models.Model):
 
 
 class GeneralsProducts(models.Model):
-    general_products_id = models.UUIDField(primary_key=True)
     stationery = models.ForeignKey('Stationery', models.DO_NOTHING)
     subcategory = models.ForeignKey('SubcategoryStationery', models.DO_NOTHING)
     material = models.CharField(max_length=50, blank=True, null=True)
@@ -254,22 +234,15 @@ class Genre(models.Model):
     class Meta:
         managed = False
         db_table = 'genre'
-    
-    def __str__(self):
-        return self.name_genre
 
 
 class GenreBooks(models.Model):
-    genre_books_id = models.AutoField(primary_key=True)
     genre = models.ForeignKey(Genre, models.DO_NOTHING)
     book = models.ForeignKey(Books, models.DO_NOTHING)
 
     class Meta:
         managed = False
         db_table = 'genre_books'
-    
-    def __str__(self):
-        return f"{self.genre_books_id} {self.genre}, {self.book}"
 
 
 class Languages(models.Model):
@@ -280,14 +253,11 @@ class Languages(models.Model):
         managed = False
         db_table = 'languages'
 
-    def __str__(self):
-        return self.name
-
 
 class OrderDetails(models.Model):
-    order_detail_id = models.UUIDField(primary_key=True, db_default=uuid.uuid4, editable=False)
+    order_detail_id = models.UUIDField(primary_key=True)
     order = models.ForeignKey('Orders', models.DO_NOTHING)
-    book = models.ForeignKey(Books, models.DO_NOTHING)
+    book_id = models.UUIDField()
     quantity = models.SmallIntegerField(blank=True, null=True)
     price = models.DecimalField(max_digits=15, decimal_places=2)
 
@@ -295,29 +265,13 @@ class OrderDetails(models.Model):
         managed = False
         db_table = 'order_details'
 
-    def save(self, *args, **kwargs):
-        self.price = self.book.price_book * self.quantity
-        super().save(*args, **kwargs)
-
 
 class Orders(models.Model):
-
-    STATUS_CHOICES = [
-        ('Ожидание оплаты', 'Ожидание оплаты'),
-        ('Оплачен', 'Оплачен'),
-        ('Собран', 'Собран'),
-        ('Передан в доставку', 'Передан в доставку'),
-        ('В пути', 'В пути'),
-        ('Доставлен', 'Доставлен'),
-        ('Отменён', 'Отменён'),
-        ('Возврат', 'Возврат'),
-        ('Завершён', 'Завершён'),
-    ]
-
-    order_id = models.UUIDField(primary_key=True, db_default=uuid.uuid4, editable=False)
-    user = models.ForeignKey('Users', models.CASCADE)
-    order_date = models.DateTimeField(auto_now_add=True, editable=False)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
+    order_id = models.UUIDField(primary_key=True)
+    user_id = models.UUIDField()
+    order_date = models.DateTimeField()
+    status = models.TextField()  # This field type is a guess.
+    total_price = models.DecimalField(max_digits=10, decimal_places=2)  # max_digits and decimal_places have been guessed, as this database handles decimal fields as float
 
     class Meta:
         managed = False
@@ -325,7 +279,6 @@ class Orders(models.Model):
 
 
 class PaperProducts(models.Model):
-    paper_products_id = models.UUIDField(primary_key=True)
     stationery = models.ForeignKey('Stationery', models.DO_NOTHING)
     subcategory = models.ForeignKey('SubcategoryStationery', models.DO_NOTHING)
     number_of_sheets = models.SmallIntegerField(blank=True, null=True)
@@ -349,13 +302,13 @@ class Payment(models.Model):
         ('возврат', 'Возврат'),
     ]
 
-    payment_id = models.UUIDField(primary_key=True, db_default=uuid.uuid4, editable=False)
-    user_id = models.UUIDField()
+    payment_id = models.UUIDField(primary_key=True)
+    user_id = models.UUIDField(blank=True, null=True)
     order = models.OneToOneField(Orders, models.DO_NOTHING)
-    payment_date = models.DateTimeField(auto_now_add=True, editable=False)
+    payment_date = models.DateTimeField()
     amount = models.DecimalField(max_digits=15, decimal_places=2)
     payment_method = models.TextField()
-    transaction_id = models.UUIDField(default=uuid.uuid4, editable=False)
+    transaction_id = models.CharField(unique=True, max_length=255, blank=True, null=True)
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,
@@ -366,11 +319,29 @@ class Payment(models.Model):
         managed = False
         db_table = 'payment'
 
-    def save(self, *args, **kwargs):
-        if self.order:
-            total_amount = self.order.orderdetails_set.aggregate(total=models.Sum('price'))['total']
-            self.amount = total_amount if total_amount is not None else 0
-        super().save(*args, **kwargs)
+
+class Promotion(models.Model):
+    promotion_id = models.UUIDField(primary_key=True)
+    book_id = models.UUIDField()
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
+    describe = models.TextField()
+    promotion_type = models.ForeignKey('PromotionType', models.DO_NOTHING, db_column='promotion_type', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'promotion'
+
+
+class PromotionType(models.Model):
+    promotion_type_id = models.UUIDField(primary_key=True)
+    image_url = models.TextField()
+    type_name = models.TextField()
+    parameters = models.JSONField()
+
+    class Meta:
+        managed = False
+        db_table = 'promotion_type'
 
 
 class Publisher(models.Model):
@@ -381,31 +352,17 @@ class Publisher(models.Model):
         managed = False
         db_table = 'publisher'
 
-    def __str__(self):
-        return self.name_publisher
-
 
 class Reviews(models.Model):
-    reviews_id = models.BigAutoField(primary_key=True)
-    user = models.ForeignKey('Users', models.SET_NULL, blank=True, null=True)
-    book = models.ForeignKey(Books, models.CASCADE, db_column='book_id')
+    user = models.ForeignKey('Users', models.DO_NOTHING, blank=True, null=True)
+    book_id = models.UUIDField(unique=True)
     rating = models.SmallIntegerField(blank=True, null=True)
     comment = models.CharField(max_length=255)
-    review_date = models.DateField(auto_now_add=True, editable=False)
+    review_date = models.DateField()
 
     class Meta:
         managed = False
         db_table = 'reviews'
-        constraints = [
-            models.UniqueConstraint(
-                fields=['user', 'book'], 
-                name='unique_user_book_review'
-            ),
-            models.CheckConstraint(
-                check=models.Q(rating__gte=1) & models.Q(rating__lte=5),
-                name='rating_range'
-            )
-        ]
 
 
 class Stationery(models.Model):
@@ -426,7 +383,6 @@ class Stationery(models.Model):
 
 
 class StorageType(models.Model):
-    storage_type_id = models.UUIDField(primary_key=True)
     stationery = models.ForeignKey(Stationery, models.DO_NOTHING)
     subcategory = models.ForeignKey('SubcategoryStationery', models.DO_NOTHING)
     material = models.CharField(max_length=50, blank=True, null=True)
@@ -441,15 +397,12 @@ class StorageType(models.Model):
 
 class Subcategory(models.Model):
     subcategory_id = models.AutoField(primary_key=True)
-    category = models.ForeignKey(Category, models.CASCADE)
+    category = models.ForeignKey(Category, models.DO_NOTHING)
     name_subcategory = models.CharField(unique=True, max_length=100)
 
     class Meta:
         managed = False
         db_table = 'subcategory'
-
-    def __str__(self):
-        return self.name_subcategory
 
 
 class SubcategoryStationery(models.Model):
@@ -464,8 +417,8 @@ class SubcategoryStationery(models.Model):
 class Subscriptions(models.Model):
     subscriptions_id = models.AutoField(primary_key=True)
     user = models.ForeignKey('Users', models.DO_NOTHING, blank=True, null=True)
-    author = models.ForeignKey(Authors, models.DO_NOTHING, blank=True, null=True)
-    publisher = models.ForeignKey(Publisher, models.DO_NOTHING, blank=True, null=True)
+    author_id = models.IntegerField(blank=True, null=True)
+    publisher_id = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -478,22 +431,20 @@ class Users(models.Model):
     name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=30)
     phone = models.CharField(unique=True, max_length=16)
-    date_registered = models.DateTimeField(auto_now_add=True, editable=False)
-    last_login = models.DateTimeField(blank=True, null=True, editable=False)
-    user_id = models.UUIDField(primary_key=True, db_default=uuid.uuid4, editable=False,)
+    is_admin = models.BooleanField()
+    date_registered = models.DateTimeField()
+    last_login = models.DateTimeField(blank=True, null=True)
+    user_id = models.UUIDField(primary_key=True)
 
     class Meta:
         managed = False
         db_table = 'users'
 
-    def __str__(self):
-        return f"{self.name} {self.last_name}"
-
 
 class Wishlists(models.Model):
     wishlist_id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(Users, models.CASCADE)
-    book = models.ForeignKey(Books, models.CASCADE)
+    user = models.ForeignKey(Users, models.DO_NOTHING)
+    book_id = models.UUIDField(unique=True)
 
     class Meta:
         managed = False
@@ -501,7 +452,6 @@ class Wishlists(models.Model):
 
 
 class WritingMaterials(models.Model):
-    writing_materials_id = models.UUIDField(primary_key=True)
     stationery = models.ForeignKey(Stationery, models.DO_NOTHING)
     subcategory = models.ForeignKey(SubcategoryStationery, models.DO_NOTHING)
     inc_color = models.CharField(max_length=50, blank=True, null=True)

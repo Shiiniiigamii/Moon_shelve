@@ -11,7 +11,7 @@ load_dotenv(os.path.join(BASE_DIR, '.env'))
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-nqj3a=%=eb0dbsjmq*1)n&y%blq-v$yi-6iakew2*n&$9_3vlh'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -65,23 +65,27 @@ WSGI_APPLICATION = 'Moon_Shelf.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': os.environ.get('DATABASE_ENGINE'),  
+#         'NAME': os.environ.get('DATABASE_NAME'),      
+#         'USER': os.environ.get('DATABASE_USER'),
+#         'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
+#         'HOST': os.environ.get('DATABASE_HOST'),
+#         'PORT': os.environ.get('DATABASE_PORT'),
+#    }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.postgresql', 
+        'NAME': 'book_magazine_new',      
+        'USER': 'book_admin',
+        'PASSWORD': 'bookpas',
+        'HOST': 'localhost',
+        'PORT': '5432',
+        'OPTIONS': {'client_encoding': 'UTF8', 'options': '-c search_path=public,s_books,s_users,s_orders,s_stationery'},
+   }
 }
-
-#DATABASES = {
-#    'default': {
-#        'ENGINE': os.environ.get('DATABASE_ENGINE', 'django.db.backends.sqlite3'),  
-#        'NAME': os.environ.get('DATABASE_NAME', BASE_DIR / 'db.sqlite3'),      
-#        'USER': os.environ.get('DATABASE_USER'),
-#        'HOST': os.environ.get('DATABASE_HOST'),
-#        'PORT': os.environ.get('DATABASE_PORT'),
-#   }
-#}
-
 
 
 # Password validation
