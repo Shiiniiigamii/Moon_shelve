@@ -3,8 +3,8 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #EFE2FA; /* Темно-фиолетовый фон (ночное небо) */
-    color: #fff; /* Белый текст */
+    background-color: #ffffff; /* Темно-фиолетовый фон (ночное небо) */
+    color: #c783ff; /* Белый текст */
 }
 
 a {
@@ -18,82 +18,100 @@ a:hover {
 
 /* Шапка сайта (Header) */
 header {
-    background-color:#6144f1b0;
+    background-color: #6144f1b0;
     box-shadow: 0 2px 5px rgb(255, 255, 255); /* Тень */
-    display: flex;
-    flex-direction: column; /* Вертикальный макет для header */
-    align-items: stretch; /* Растягиваем элементы по ширине */
+    width: flex; /* Ширина на весь экран */
+    height: 100px; /* Фиксированная высота */
+    display: flex; /* Flex для горизонтального расположения дочерних элементов */
+    align-items: center; /* Выравнивание по вертикали */
+    padding: 0 20px; /* Отступы слева и справа */
 }
 
-.header-top {
-    display: flex; /* Flex для названия и иконок */
-    justify-content: space-between; /* Название слева, иконки справа */
-    align-items: center; /* Выравнивание по вертикали */
-    margin-bottom: 10px; /* Отступ между верхним рядом и строкой поиска */
+/* Левый блок (заголовок) */
+.header-left {
+    flex: 0 0 auto; /* Не растягивается и не сжимается */
 }
 
 header h1 {
-    margin: 10;
-    font-size: 1em;
+    margin: 0; /* Убираем отступы */
+    font-size: 1.5em;
     letter-spacing: 0.5px;
-    display: flex;
-    flex-direction: column;
     background-color: #d7abffbb;
     padding: 15px 10px;
     border-radius: 5px;
+    color: #ffffff;
 }
 
-/* Поиск */
+/* Центральный блок (поиск) */
 .search-bar {
-    margin-bottom: 25px;
-    display: flex; /* Flex для строки поиска */
-    justify-content: center; /* Выравниваем форму по центру */
-}
-.search-bar form {
-    width: 100%; /* Чтобы форма занимала всю ширину search-bar */
+    flex: 1; /* Занимает всё доступное пространство */
     display: flex;
-    justify-content: center;
+    justify-content: center; /* Выравнивание по центру */
+    margin: 0 20px; /* Отступы слева и справа */
 }
+
+.search-bar form {
+    width: 100%; /* Форма занимает всю ширину search-bar */
+    max-width: 700px; /* Увеличиваем максимальную ширину формы */
+    display: flex;
+    gap: 10px; /* Расстояние между полем ввода и кнопкой */
+}
+
 .search-bar input[type="text"] {
-    padding: 8px;
+    padding: 12px; /* Увеличиваем отступы */
     border: none;
-    border-radius: 3px;
-    width: 70%; /* Изменяем ширину поля ввода */
-    max-width: 500px; /*  максимальную ширину для поля ввода  */
-    height: max-content;
+    border-radius: 5px; /* Скруглённые углы */
+    width: 100%; /* Поле ввода занимает всю доступную ширину */
+    font-size: 1.1em; /* Увеличиваем размер шрифта */
 }
+
 .search-bar button[type="submit"] {
-    padding: 8px 12px;
+    padding: 12px 20px; /* Увеличиваем отступы */
     background-color: #d7abffbb;
     color: white;
     border: none;
-    border-radius: 3px;
+    border-radius: 5px; /* Скруглённые углы */
     cursor: pointer;
-    margin-left: 5px; /* Расстояние между полем ввода и кнопкой */
+    font-size: 1.1em; /* Увеличиваем размер шрифта */
+    flex: 0 0 auto; /* Кнопка не растягивается */
+}
+
+/* Правый блок (иконки) */
+.header-right {
+    flex: 0 0 auto; /* Не растягивается и не сжимается */
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Расстояние между иконками */
 }
 
 /* Общий стиль для контейнера иконки и текста */
 .icon-container {
-    display: flex;       /* Используем flexbox для выравнивания */
-    align-items: right; /* Выравниваем элементы по вертикали */
-    margin-bottom: 10px;   /* Добавляем небольшой отступ снизу */
-
+    display: flex;
+    align-items: center; /* Выравнивание по вертикали */
+    gap: 15px; /* Увеличиваем расстояние между иконками */
+    padding-right: 20%;
 }
 
 .icon-container span {
     color: #ffffffbb; /* Светло-фиолетовый цвет */
-    font-size: 1.4em; /* Увеличенный размер */
-    margin-left: 10px; /* Добавил больший отступ между иконками */
+    font-size: 2em; /* Увеличиваем размер иконок */
+    cursor: pointer; /* Курсор в виде указателя */
+    transition: color 0.3s ease; /* Плавное изменение цвета */
 }
+
+.icon-container span:hover {
+    color: #ffffff; /* Белый цвет при наведении */
+}
+
 
 /* Навигация (Navigation) */
 nav {
+    margin-top: 5px;
     background-color: #d7abffbb; /* Яркий фиолетовый для навигации */
     padding: 5px;
     display: flex;
     justify-content: space-around; /* Равномерное распределение пунктов меню */
-    border-radius: 25%;
-    
+    border-radius: 10px;
 }
 
 nav a {

@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import *
 
 def main(request):
-    return render(request, 'shop/books.html')
+    books = Books.objects.all()
+    return render(request, 'shop/books.html', {'books': books})
 
 def books(request):
     pass

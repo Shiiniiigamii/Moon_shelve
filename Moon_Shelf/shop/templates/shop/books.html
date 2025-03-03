@@ -2,32 +2,22 @@
 
 {% block content %}
     {% load static %}
+    <link rel="stylesheet" href="{% static 'shop/css/books.css'%}">  
     <script src="{% static 'shop/js/scroll.js' %}"></script>
-    <h2 class="theme">Рекомендуемые книги</h2>
+    <h2 class="theme">Новинки</h2>
     <div class="book-slider">
         <button class="slider-button slider-button--left" onclick="scrollBooks(-1)">&#8249;</button>  <!-- Кнопка "влево" -->
         <div class="book-container">
-            <div class="book-item">
-                <h2>Название книги 1</h2>
-                <p>Описание книги 1...</p>
-            </div>
-            <div class="book-item">
-                <h2>Название книги 2</h2>
-                <p>Описание книги 2...</p>
-            </div>
-            <!-- Добавьте больше элементов .book-item здесь -->
-            <div class="book-item">
-                <h2>Название книги 3</h2>
-                <p>Описание книги 3...</p>
-            </div>
-            <div class="book-item">
-                <h2>Название книги 4</h2>
-                <p>Описание книги 4...</p>
-            </div>
-            <div class="book-item">
-                <h2>Название книги 5</h2>
-                <p>Описание книги 5...</p>
-            </div>
+            {% for book in books %} 
+                <div class="book-item">
+                    <img src="{% static book.image_path %}" alt="{{ book.title }}" style="max-width: 200px;">                    
+                    <h4>{{ book.title }}</h4>  <!-- Название книги -->
+                    <p><strong>Цена:</strong> {{ book.price_book }} руб.</p>  <!-- Цена -->
+                    <p><strong>Автор:</strong> {{ book.author }}</p>  <!-- Автор -->
+                    <p><strong>Рейтинг:</strong> {{ book.rating }}</p>  <!-- Рейтинг -->
+                    <button class="buy-button">Купить</button>
+                </div>
+            {% endfor %} 
         </div>
         <button class="slider-button slider-button--right" onclick="scrollBooks(1)">&#8250;</button> <!-- Кнопка "вправо" -->
     </div>

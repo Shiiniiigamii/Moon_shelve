@@ -1,50 +1,58 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Moon Shelf - Книжный интернет-магазин{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'shop/css/main.css' %}">  
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="SHA512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
-<body>
-    <header>
-        <div class="header-top">
-            <h1>Moon Shelf</h1>
-
-            <div class="icon-container">
-                <span class = "fas fa-user-circle"></span>  <!-- личный кабинет -->
-                <span class = "far fa-heart"></span> <!-- Список желаний  -->
-                <span class = "fas fa-archive"></span> <!-- История покупок  -->
-                <span class = "fas fa-shopping-basket"></span> <!-- Корзина  -->
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Moon Shelf - Книжный интернет-магазин{% endblock %}</title>
+        <link rel="stylesheet" href="{% static 'shop/css/main.css' %}">  
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="SHA512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    </head>
+    <body>
+        <!-- Шапка сайта -->
+        <header>
+            <!-- Левый блок: Заголовок -->
+            <div class="header-left">
+                <h1>Moon Shelf</h1>
             </div>
-        </div>
-        <div class="search-bar">
-            <form action="/search/" method="get">
-              <input type="text" name="q" placeholder="Поиск книги...">
-              <button type="submit">Найти</button>
-            </form>
-        </div>
-
-    </header>
-
-    <nav>
-        <a href="">Каталог</a>
-        <a href="/stock/">Акции</a>
-        <a href="/basket/">Корзина</a>
-        <a href="/profile/">Профиль</a>
-    </nav>
-
-    <main>
-        
-        {% block content %}
-        {% endblock %}
-    </main>
-
-    <footer>
-        &copy; 2025 Moon Shelf. Все права защищены.
-    </footer>
-</body>
+    
+            <!-- Центральный блок: Поисковая строка -->
+            <div class="search-bar">
+                <form action="/search/" method="get">
+                    <input type="text" name="q" placeholder="Поиск книги...">
+                    <button type="submit">Найти</button>
+                </form>
+            </div>
+    
+            <!-- Правый блок: Иконки -->
+            <div class="header-right">
+                <div class="icon-container">
+                    <span class="fas fa-user-circle"></span>  <!-- Личный кабинет -->
+                    <span class="far fa-heart"></span>       <!-- Список желаний -->
+                    <span class="fas fa-archive"></span>     <!-- История покупок -->
+                    <span class="fas fa-shopping-basket"></span> <!-- Корзина -->
+                </div>
+            </div>
+        </header>
+    
+        <!-- Навигация -->
+        <nav>
+            <a href="/catalog/">Каталог</a>
+            <a href="/stock/">Акции</a>
+            <a href="/basket/">Корзина</a>
+            <a href="/profile/">Профиль</a>
+        </nav>
+    
+        <!-- Основное содержимое -->
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+    
+        <!-- Подвал -->
+        <footer>
+            &copy; 2025 Moon Shelf. Все права защищены.
+        </footer>
+    </body>
 </html>
 

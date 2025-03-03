@@ -1,0 +1,108 @@
+/* Заголовок "Рекомендуемые книги" */
+h2.theme {
+    margin-top: 10px; /* Уменьшаем отступ сверху */
+    margin-bottom: 10px; /* Уменьшаем отступ снизу */
+    font-size: 1.5em; /* Размер шрифта */
+    color: #333333; /* Цвет текста */
+    text-align: left; /* Выравнивание по центру */
+    color: #b160fdbb;
+}
+
+/* Контейнер для слайдера */
+.book-slider {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0; /* Уменьшаем отступы сверху и снизу */
+    overflow: hidden;
+}
+
+/* Контейнер для книг */
+.book-container {
+    display: flex;
+    gap: 10px; /* Уменьшаем расстояние между книгами */
+    overflow-x: auto; /* Горизонтальная прокрутка */
+    scroll-behavior: smooth; /* Плавная прокрутка */
+    padding: 10px 0;
+    width: 100%;
+}
+
+/* Остальные стили остаются без изменений */
+.book-item {
+    flex: 0 0 auto;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    width: 200px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.book-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.book-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.book-item h4 {
+    font-size: 1.2em;
+    margin: 10px 0;
+    color: #333333;
+}
+
+.book-item p {
+    font-size: 0.9em;
+    color: #666666;
+    margin: 5px 0;
+}
+
+.slider-button {
+    background-color: #6144f1b0;
+    border: none;
+    color: white;
+    font-size: 1.5em;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.slider-button:hover {
+    background-color: #4a2fd1b0;
+}
+
+.slider-button--left {
+    position: absolute;
+    left: 10px;
+    z-index: 1;
+}
+
+.slider-button--right {
+    position: absolute;
+    right: 10px;
+    z-index: 1;
+}
+
+.buy-button {
+    background-color: #6144f1b0;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.buy-button:hover {
+    background-color: #4a2fd1b0;
+}
