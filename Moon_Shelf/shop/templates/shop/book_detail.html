@@ -1,0 +1,56 @@
+<!-- shop/book_detail.html -->
+{% extends 'shop/main_template.html' %}
+{% load static %}
+{% block title %}{{ book.title }} - Moon Shelf{% endblock %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'shop/css/book_detail.css' %}">
+    <div class="book-detail">
+        <!-- Картинка книги и информация о книге -->
+        <div class="book-info">
+            <h2>{{ book.title }}</h2>
+            <p><strong>Автор:</strong> {{ book.author.name }}</p>
+            <p><strong>Цена:</strong> {{ book.price_book }} руб.</p>
+            <p><strong>Рейтинг:</strong> {{ book.rating }}</p>
+            <p><strong>Описание:</strong> {{ book.description }}</p>
+            <p><strong>Год издания:</strong> {{ book.year_of_publication }}</p>
+            <img src="{% static book.image_path %}" alt="{{ book.title }}">
+
+            <!-- Форма для покупки -->
+            <div class="purchase-form">
+                <h3>Купить книгу</h3>
+                    {% csrf_token %}
+                    <label for="quantity">Количество:</label>
+                    <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+
+                    <!-- Выбор адреса -->
+                    <div class="address-selection">
+                        <h3>Выберите адрес для доставки</h3>
+                        <button type="button" id="select-address-button">Выбрать адрес</button>
+                    </div>
+
+                    <button type="submit">Купить</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Отзывы -->
+        <div class="reviews">
+            <h3>Отзывы</h3>
+            {% if reviews %}
+                <div class="review-list">
+                    {% for review in reviews %}
+                        <div class="review">
+                            <p><strong>{{ review.user.username }}:</strong> {{ review.comment }}</p>
+                            <p><strong>Рейтинг:</strong> {{ review.rating }}</p>
+                            <p><strong>Дата отзыва:</strong> {{ review.review_date }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="no-reviews">Пока нет отзывов для этой книги.</p>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

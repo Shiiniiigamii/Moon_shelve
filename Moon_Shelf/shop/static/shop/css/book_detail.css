@@ -1,0 +1,151 @@
+/* Общие стили для страницы книги */
+.book-detail {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.book-detail h2 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.book-detail p {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* Картинка книги */
+.book-detail img {
+    max-width: 100%;
+    max-height: 400px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+/* Контейнер для информации о книге и формы покупки */
+.book-info {
+    flex: 1 1 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+/* Форма для покупки книги */
+.purchase-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.purchase-form h3 {
+    font-size: 1.5em;
+    color: #4a2fd1;
+    margin-bottom: 15px;
+}
+
+.purchase-form label {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    display: block;
+    color: #333;
+}
+
+.purchase-form input, .purchase-form select, .purchase-form button {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.purchase-form button {
+    background-color: #6144f1;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.purchase-form button:hover {
+    background-color: #4a2fd1;
+}
+
+/* Стили для кнопки выбора адреса */
+.address-selection {
+    background-color: #f1f1f1;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.address-selection h3 {
+    font-size: 1.5em;
+    color: #4a2fd1;
+    margin-bottom: 10px;
+}
+
+.address-selection button {
+    background-color: #3b76e1;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    font-size: 1.1em;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.address-selection button:hover {
+    background-color: #2f64c1;
+}
+
+/* Рейтинг и комментарии */
+.reviews {
+    margin-top: 40px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.reviews h3 {
+    font-size: 1.5em;
+    color: #4a2fd1;
+    margin-bottom: 20px;
+}
+
+.review {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.review p {
+    font-size: 1.1em;
+    color: #333;
+}
+
+.review p strong {
+    color: #4a2fd1;
+}
+
+.review:last-child {
+    border-bottom: none;
+}
+
+.no-reviews {
+    font-size: 1.1em;
+    color: #666;
+}

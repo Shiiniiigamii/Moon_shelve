@@ -27,7 +27,17 @@
             <!-- Правый блок: Иконки -->
             <div class="header-right">
                 <div class="icon-container">
-                    <span class="fas fa-user-circle"></span>  <!-- Личный кабинет -->
+                    {% if user.is_authenticated %}
+                        <!-- Если пользователь авторизован -->
+                        <a href="{% url 'profile' %}">
+                            <span class="fas fa-user-circle"></span> <!-- Иконка для личного кабинета -->
+                        </a>
+                    {% else %}
+                        <!-- Если пользователь не авторизован -->
+                        <a href="{% url 'login' %}">
+                            <span class="fas fa-user-circle"></span> <!-- Иконка для личного кабинета -->
+                        </a>
+                    {% endif %}
                     <span class="far fa-heart"></span>       <!-- Список желаний -->
                     <span class="fas fa-archive"></span>     <!-- История покупок -->
                     <span class="fas fa-shopping-basket"></span> <!-- Корзина -->
@@ -38,9 +48,13 @@
         <!-- Навигация -->
         <nav>
             <a href="/catalog/">Каталог</a>
-            <a href="/stock/">Акции</a>
+            <!-- <a href="/stock/">Акции</a> -->
             <a href="/basket/">Корзина</a>
-            <a href="/profile/">Профиль</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}">Профиль</a>
+            {% else %}
+                <a href="{% url 'login' %}">Авторизация</a>
+            {% endif %}
         </nav>
     
         <!-- Основное содержимое -->
@@ -55,4 +69,3 @@
         </footer>
     </body>
 </html>
-

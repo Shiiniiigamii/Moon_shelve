@@ -7,6 +7,7 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 import uuid
+from django.contrib.auth.models import AbstractBaseUser
 
 
 class Address(models.Model):
@@ -110,7 +111,7 @@ class Authors(models.Model):
 
 class Basket(models.Model):
     basket_id = models.AutoField(primary_key=True)
-    user = models.ForeignKey('Users', models.CASCADE)
+    user = models.ForeignKey('Users', models.CASCADE, null=True)
     book = models.ForeignKey('Books', models.CASCADE)
     quantity = models.SmallIntegerField()
 
@@ -315,7 +316,7 @@ class Orders(models.Model):
     ]
 
     order_id = models.UUIDField(primary_key=True, db_default=uuid.uuid4, editable=False)
-    user = models.ForeignKey('Users', models.CASCADE)
+    user = models.ForeignKey('Users', models.CASCADE, null=True)
     order_date = models.DateTimeField(auto_now_add=True, editable=False)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
 
@@ -472,7 +473,23 @@ class Subscriptions(models.Model):
         db_table = 'subscriptions'
 
 
-class Users(models.Model):
+# class Users(models.Model):
+#    email = models.CharField(unique=True, max_length=254)
+#    password = models.TextField()
+#    name = models.CharField(max_length=20)
+#   last_name = models.CharField(max_length=30)
+#    date_registered = models.DateTimeField(auto_now_add=True, editable=False)
+#    last_login = models.DateTimeField(blank=True, null=True, editable=False)
+#    user_id = models.UUIDField(primary_key=True, db_default=uuid.uuid4, editable=False,)
+#
+#    class Meta:
+#        managed = False
+#        db_table = 'users'
+#
+#    def __str__(self):
+#        return f"{self.name} {self.last_name}"
+
+class Users(AbstractBaseUser):
     email = models.CharField(unique=True, max_length=254)
     password = models.TextField()
     name = models.CharField(max_length=20)
@@ -480,7 +497,23 @@ class Users(models.Model):
     phone = models.CharField(unique=True, max_length=16)
     date_registered = models.DateTimeField(auto_now_add=True, editable=False)
     last_login = models.DateTimeField(blank=True, null=True, editable=False)
-    user_id = models.UUIDField(primary_key=True, db_default=uuid.uuid4, editable=False,)
+    user_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+    # Указываем, какие поля будут обязательными для создания суперпользователя
+    REQUIRED_FIELDS = ['name', 'last_name', 'phone']  # не включаем email и password, потому что они обязательны по умолчанию
+
+    # Устанавливаем, какое поле будет уникальным идентификатором
+    USERNAME_FIELD = 'email'  # используем email в качестве логина
+    EMAIL_FIELD = 'email'  # чтобы email был обязательным для всех пользователей
+
+    # Переопределяем свойства для работы с аутентификацией
+    @property
+    def is_authenticated(self):
+        return True  # Все пользователи считаются аутентифицированными
+
+    @property
+    def is_anonymous(self):
+        return False  # Все пользователи считаются анонимными
 
     class Meta:
         managed = False

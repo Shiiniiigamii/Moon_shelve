@@ -1,23 +1,24 @@
 {% extends 'shop/main_template.html' %}
+{% load static %}
 
 {% block content %}
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'shop/css/books.css'%}">  
-    <script src="{% static 'shop/js/scroll.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'shop/css/books.css' %}">
     <h2 class="theme">Новинки</h2>
     <div class="book-slider">
         <button class="slider-button slider-button--left" onclick="scrollBooks(-1)">&#8249;</button>  <!-- Кнопка "влево" -->
         <div class="book-container">
-            {% for book in books %} 
+            {% for book in books %}
                 <div class="book-item">
-                    <img src="{% static book.image_path %}" alt="{{ book.title }}" style="max-width: 200px;">                    
-                    <h4>{{ book.title }}</h4>  <!-- Название книги -->
-                    <p><strong>Цена:</strong> {{ book.price_book }} руб.</p>  <!-- Цена -->
-                    <p><strong>Автор:</strong> {{ book.author }}</p>  <!-- Автор -->
-                    <p><strong>Рейтинг:</strong> {{ book.rating }}</p>  <!-- Рейтинг -->
+                    <a href="{% url 'book_detail' book.book_id %}">
+                        <img src="{% static book.image_path %}" alt="{{ book.title }}" style="max-width: 200px;">
+                        <h4>{{ book.title }}</h4>  <!-- Название книги -->
+                        <p><strong>Цена:</strong> {{ book.price_book }} руб.</p>  <!-- Цена -->
+                        <p><strong>Автор:</strong> {{ book.author.name }}</p>  <!-- Автор -->
+                        <p><strong>Рейтинг:</strong> {{ book.rating }}</p>  <!-- Рейтинг -->
+                    </a>
                     <button class="buy-button">Купить</button>
                 </div>
-            {% endfor %} 
+            {% endfor %}
         </div>
         <button class="slider-button slider-button--right" onclick="scrollBooks(1)">&#8250;</button> <!-- Кнопка "вправо" -->
     </div>
