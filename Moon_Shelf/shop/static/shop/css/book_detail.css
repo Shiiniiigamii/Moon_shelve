@@ -1,48 +1,64 @@
 /* Общие стили для страницы книги */
 .book-detail {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
     gap: 30px;
-    justify-content: center;
     padding: 20px;
     background-color: #f9f9f9;
+    max-width: 1200px;
+    margin: auto;
 }
 
-.book-detail h2 {
+/* Верхний блок с книгой и формой покупки */
+.top-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 1200px;
+    gap: 20px;
+}
+
+/* Блок с книгой (обложка и информация) */
+.book-info {
+    flex: 2;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.book-info h2 {
     font-size: 2em;
     color: #333;
     margin-bottom: 20px;
 }
 
-.book-detail p {
+.book-info p {
     font-size: 1.2em;
     color: #555;
     margin-bottom: 10px;
 }
 
-/* Картинка книги */
-.book-detail img {
-    max-width: 100%;
+.book-info img {
+    max-width: 300px;
     max-height: 400px;
     border-radius: 8px;
-    object-fit: cover;
+    object-fit: contain;
+    display: block;
+    margin-top: 15px;
 }
 
-/* Контейнер для информации о книге и формы покупки */
-.book-info {
-    flex: 1 1 600px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    justify-content: space-between;
-}
-
-/* Форма для покупки книги */
+/* Форма покупки */
 .purchase-form {
-    background-color: #fff;
+    flex: 1;
+    max-width: 350px;
     padding: 20px;
+    background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    align-self: center;
 }
 
 .purchase-form h3 {
@@ -58,7 +74,9 @@
     color: #333;
 }
 
-.purchase-form input, .purchase-form select, .purchase-form button {
+.purchase-form input,
+.purchase-form select,
+.purchase-form button {
     width: 100%;
     padding: 12px;
     margin: 8px 0;
@@ -80,40 +98,10 @@
     background-color: #4a2fd1;
 }
 
-/* Стили для кнопки выбора адреса */
-.address-selection {
-    background-color: #f1f1f1;
-    padding: 20px;
-    margin-top: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.address-selection h3 {
-    font-size: 1.5em;
-    color: #4a2fd1;
-    margin-bottom: 10px;
-}
-
-.address-selection button {
-    background-color: #3b76e1;
-    color: #fff;
-    border: none;
-    padding: 12px;
-    width: 100%;
-    font-size: 1.1em;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: background-color 0.3s;
-}
-
-.address-selection button:hover {
-    background-color: #2f64c1;
-}
-
-/* Рейтинг и комментарии */
+/* Отзывы (снизу на всю ширину) */
 .reviews {
-    margin-top: 40px;
+    width: 100%;
+    margin-top: 20px;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -148,4 +136,17 @@
 .no-reviews {
     font-size: 1.1em;
     color: #666;
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 768px) {
+    .top-section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .purchase-form {
+        align-self: stretch;
+        max-width: 100%;
+    }
 }

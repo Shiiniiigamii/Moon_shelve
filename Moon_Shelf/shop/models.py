@@ -7,7 +7,8 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 import uuid
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+
 
 
 class Address(models.Model):
@@ -488,32 +489,45 @@ class Subscriptions(models.Model):
 #
 #    def __str__(self):
 #        return f"{self.name} {self.last_name}"
+class UserManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        """Создание обычного пользователя"""
+        if not email:
+            raise ValueError("Email обязателен")
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)  # Хэшируем пароль
+        user.save(using=self._db)
+        return user
 
-class Users(AbstractBaseUser):
-    email = models.CharField(unique=True, max_length=254)
-    password = models.TextField()
+    def create_superuser(self, email, password=None, **extra_fields):
+        """Создание суперпользователя"""
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        return self.create_user(email, password, **extra_fields)
+
+    def get_by_natural_key(self, email):
+        """Позволяет Django находить пользователя по email"""
+        return self.get(email=email)
+
+class Users(AbstractBaseUser, PermissionsMixin):  # Добавляем PermissionsMixin для прав доступа
+    user_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    email = models.EmailField(unique=True, max_length=254)
+    password = models.CharField(max_length=128)  # Django ожидает хешированные пароли
     name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=30)
     phone = models.CharField(unique=True, max_length=16)
     date_registered = models.DateTimeField(auto_now_add=True, editable=False)
     last_login = models.DateTimeField(blank=True, null=True, editable=False)
-    user_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
-    # Указываем, какие поля будут обязательными для создания суперпользователя
-    REQUIRED_FIELDS = ['name', 'last_name', 'phone']  # не включаем email и password, потому что они обязательны по умолчанию
+    is_active = models.BooleanField(default=True)  # Добавляем активность
+    is_staff = models.BooleanField(default=False)  # Разрешает вход в админку
+    is_superuser = models.BooleanField(default=False)  # Указывает, является ли пользователь суперпользователем
 
-    # Устанавливаем, какое поле будет уникальным идентификатором
-    USERNAME_FIELD = 'email'  # используем email в качестве логина
-    EMAIL_FIELD = 'email'  # чтобы email был обязательным для всех пользователей
+    objects = UserManager()  # Указываем менеджер
 
-    # Переопределяем свойства для работы с аутентификацией
-    @property
-    def is_authenticated(self):
-        return True  # Все пользователи считаются аутентифицированными
-
-    @property
-    def is_anonymous(self):
-        return False  # Все пользователи считаются анонимными
+    USERNAME_FIELD = 'email'  # Поле для логина
+    REQUIRED_FIELDS = ['name', 'last_name', 'phone']  # Обязательные поля
 
     class Meta:
         managed = False

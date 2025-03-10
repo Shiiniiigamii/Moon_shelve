@@ -47,7 +47,7 @@ header {
 
 header h1 {
     margin: 0; /* Убираем отступы */
-    font-size: 1.5em;
+    font-size: 1em;
     letter-spacing: 0.5px;
     background-color: #d7abffbb;
     padding: 15px 10px;
@@ -68,6 +68,7 @@ header h1 {
     max-width: 700px; /* Увеличиваем максимальную ширину формы */
     display: flex;
     gap: 10px; /* Расстояние между полем ввода и кнопкой */
+    height: fit-content;
 }
 
 .search-bar input[type="text"] {
@@ -232,6 +233,7 @@ footer {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 300px;
+    box-sizing: border-box;
 }
 
 .auth-box h2 {
@@ -245,6 +247,7 @@ footer {
     margin: 10px 0;
     border: 1px solid #ddd;
     border-radius: 5px;
+    box-sizing: border-box;
 }
 
 .auth-box button {
@@ -255,6 +258,7 @@ footer {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    box-sizing: border-box;
 }
 
 .auth-box button:hover {
