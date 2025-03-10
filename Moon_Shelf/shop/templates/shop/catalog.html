@@ -12,7 +12,7 @@
             {% for category in categories %}
                 <li>
                     <a href="{% url 'category_books' category.category_id %}">{{ category.name_category }}</a>
-                    {% if selected_category == category.category_id %}
+                    {% if selected_category == category %}
                         <ul>
                             {% for sub in subcategories %}
                                 <li><a href="{% url 'subcategory_books' category.category_id sub.subcategory_id %}">{{ sub.name_subcategory }}</a></li>
@@ -26,7 +26,15 @@
 
     <!-- Список книг -->
     <div class="books-list">
-        <h2 class="theme">Новинки</h2>
+        <h2 class="theme">
+            {% if selected_subcategory %}
+                {{ selected_subcategory.name_subcategory }}
+            {% elif selected_category %}
+                {{ selected_category.name_category }}
+            {% else %}
+                Все книги
+            {% endif %}
+        </h2>
         <div class="book-slider">
             <button class="slider-button slider-button--left" onclick="scrollBooks(-1)">&#8249;</button>  <!-- Кнопка "влево" -->
             <div class="book-container">
