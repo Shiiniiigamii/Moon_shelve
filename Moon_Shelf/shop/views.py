@@ -79,6 +79,32 @@ def profile_view(request):
 
     return render(request, 'shop/profile.html', {'user': user})
 
+def catalog_view(request, category_id=None, subcategory_id=None):
+    categories = Category.objects.all()
+    subcategories = None
+    books = Books.objects.all()
+
+    if category_id:
+        category = get_object_or_404(Category, category_id=category_id)
+        subcategories = Subcategory.objects.filter(category=category)
+        books = Books.objects.filter(category=category)
+
+    if subcategory_id:
+        if Subcategory.objects.filter(subcategory_id=subcategory_id).exists():
+            subcategory = get_object_or_404(Subcategory, subcategory_id=subcategory_id)
+            books = Books.objects.filter(subcategory=subcategory)  # Исправлено!
+        else:
+            books = Books.objects.none()  # Возвращаем пустой QuerySet, если подкатегории нет
+
+    context = {
+        "categories": categories,
+        "subcategories": subcategories,
+        "books": books,
+        "selected_category": category_id,
+        "selected_subcategory": subcategory_id
+    }
+    return render(request, "shop/catalog.html", context)
+
 def basket(request):
     pass
 
