@@ -1,0 +1,25 @@
+{% extends 'shop/main_template.html' %}
+{% load static %} 
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'shop/css/books.css' %}">
+    <h2>Результаты поиска по запросу: "{{ query }}"</h2>
+    
+    {% if books %}
+        <div class="book-list">
+            {% for book in books %}
+                <div class="book-item">
+                    <a href="{% url 'book_detail' book.book_id %}">
+                        <img src="{% static book.image_path %}" alt="{{ book.title }}" style="max-width: 200px;">
+                        <h4>{{ book.title }}</h4>
+                        <p><strong>Автор:</strong> {{ book.author.name }}</p>
+                        <p><strong>Цена:</strong> {{ book.price_book }} руб.</p>
+                        <button class="buy-button">Купить</button>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Книги не найдены.</p>
+    {% endif %}
+{% endblock %}

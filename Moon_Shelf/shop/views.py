@@ -7,6 +7,8 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import get_user_model
+from django.db.models import Q
+from django.http import JsonResponse
 
 
 def main(request):
@@ -107,6 +109,25 @@ def catalog_view(request, category_id=None, subcategory_id=None):
     }
 
     return render(request, "shop/catalog.html", context)
+
+def search_suggestions(request):
+    """Возвращает подсказки при поиске книг."""
+    query = request.GET.get("q", "").strip()
+    if query:
+        books = Books.objects.filter(
+            Q(title__icontains=query) | Q(author__name__icontains=query)
+        )[:5]
+        data = [{"title": book.title, "author": book.author.name} for book in books]
+        return JsonResponse(data, safe=False)
+    return JsonResponse([], safe=False)
+
+def search_results(request):
+    """Вывод результатов поиска на новой странице."""
+    query = request.GET.get("q", "").strip()
+    books = []
+    if query:
+        books = Books.objects.filter(Q(title__icontains=query) | Q(author__name__icontains=query))
+    return render(request, "shop/search_results.html", {"books": books, "query": query})
 
 def basket(request):
     pass

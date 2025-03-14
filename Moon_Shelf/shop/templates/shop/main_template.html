@@ -7,6 +7,7 @@
         <title>{% block title %}Moon Shelf - Книжный интернет-магазин{% endblock %}</title>
         <link rel="stylesheet" href="{% static 'shop/css/main.css' %}">  
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="SHA512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="{% static 'shop/js/search.js' %}"></script>
     </head>
     <body>
         <!-- Шапка сайта -->
@@ -18,10 +19,11 @@
                 </a>
             </div>
     
-            <!-- Центральный блок: Поисковая строка -->
+                    <!-- Поисковая строка -->
             <div class="search-bar">
                 <form action="/search/" method="get">
-                    <input type="text" name="q" placeholder="Поиск книги...">
+                    <input type="text" name="q" id="search-input" placeholder="Поиск книги...">
+                    <div id="suggestions"></div>  {# Блок для подсказок #}
                     <button type="submit">Найти</button>
                 </form>
             </div>
@@ -69,5 +71,6 @@
         <footer>
             &copy; 2025 Moon Shelf. Все права защищены.
         </footer>
+        
     </body>
 </html>
